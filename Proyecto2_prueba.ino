@@ -40,10 +40,10 @@ bool abierto;
 
 //-*****Sensor de humedad y temperatura*****-
 
-#define DHT11_PIN 52; //PIN DONDE SE CONECTA EL DHT11 
+const int DHT11_PIN = 52; //PIN DONDE SE CONECTA EL DHT11 
 #define DHTTYPE DHT11 //Tipo de sensor DHT que se esta utilizando
 
-DHT dht (DHTPIN, DHTTYPE); 
+DHT dht (DHT11_PIN, DHTTYPE, 6); 
 
 //***********************
 
@@ -64,7 +64,7 @@ void setup() {
   Servomotor.attach(9);
   //pinMode(relevador1, OUTPUT);
   //pinMode(relevador2, OUTPUT);  
-  DHT.begin();
+  dht.begin();
 }
 
 
@@ -138,7 +138,7 @@ void loop() {
   }
 
 //Sensor Humedad y temperatura------------
-int chk = DHT.read(DHT11_PIN);
+int chk = dht.read(DHT11_PIN);
 //***********
   
 // Actualizar pantalla
@@ -154,11 +154,11 @@ int chk = DHT.read(DHT11_PIN);
   lcd.clear();
   lcd.setCursor(0,0);
   lcd.print("Temp: ");
-  lcd.print(DHT.temperature);
+  lcd.print(dht.readTemperature());
   lcd.print(" C");
   lcd.setCursor(0,1);
   lcd.print("Hum: ");
-  lcd.print(DHT.humidity);
+  lcd.print(dht.readHumidity());
   lcd.print(" %");
    delay(2000);
    
